@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="student.html">Student Portal</a>
+      <button class="navbar-toggler" type="button" aria-label="Toggle navigation" aria-controls="studentNav" aria-expanded="false" data-bs-toggle="collapse" data-bs-target="#studentNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="studentNav">
+        <ul class="navbar-nav ms-auto align-items-md-center">
+          <li class="nav-item"><a class="nav-link" href="#studentInfo">My Details</a></li>
+          <li class="nav-item"><a class="nav-link" href="#courseSection">My Courses</a></li>
+          <li class="nav-item"><a class="nav-link" href="#historySection">Attendance History</a></li>
+          <li class="nav-item">
+            <button type="button" id="logoutBtn" class="btn btn-outline-light btn-sm ms-md-3 mt-2 mt-md-0">Logout</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container my-4">
+
+    <!-- ===== REGISTRATION VIEW (shown when no student is signed in) ===== -->
+    <section id="registerSection" class="d-none">
+      <div class="row g-4">
+
+        <div class="col-12 col-lg-7">
+          <div class="card shadow-sm">
+            <div class="card-body p-4">
+              <h2 class="h4 mb-3">Student Registration</h2>
+
+              <form id="registerForm" novalidate>
+                <p class="text-muted small">Fields marked * are required. Your matriculation number should be unique.</p>
+                <div class="mb-3">
+                  <label for="fullName" class="form-label">Full name *</label>
+                  <input type="text" class="form-control" id="fullName" autocomplete="name" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="matricNumber" class="form-label">Matriculation number *</label>
+                  <input type="text" class="form-control" id="matricNumber" placeholder="e.g. CSC/2023/001" autocomplete="off" required>
+                </div>
+
+                <div class="row">
+                  <div class="col-12 col-md-7 mb-3">
+                    <label for="department" class="form-label">Department *</label>
+                    <input type="text" class="form-control" id="department" placeholder="e.g. Computer Science" required>
+                  </div>
+                  <div class="col-12 col-md-5 mb-3">
+                    <label for="level" class="form-label">Level *</label>
+                    <select class="form-select" id="level" required>
+                      <option value="">Choose level</option>
+                      <option value="100">100</option>
+                      <option value="200">200</option>
+                      <option value="300">300</option>
+                      <option value="400">400</option>
+                      <option value="500">500</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email address (optional)</label>
+                  <input type="email" class="form-control" id="email" autocomplete="email">
+                </div>
+
+                <h3 class="h6 mt-4">Courses *</h3>
+                <p class="text-muted small mb-2">Tick the courses you take:</p>
+                <div id="courseCheckboxes" class="mb-3"></div>
+
+                <p class="text-muted small mb-2">Or enter another course yourself:</p>
+                <div class="row">
+                  <div class="col-12 col-md-4 mb-3">
+                    <input type="text" class="form-control" id="customCourseCode" placeholder="Course code">
+                  </div>
+                  <div class="col-12 col-md-8 mb-3">
+                    <input type="text" class="form-control" id="customCourseTitle" placeholder="Course title">
+                  </div>
+                </div>
+
+                <div id="registerErrors" class="alert alert-danger d-none" role="alert" aria-live="polite"></div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100">Register</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-5">
+          <div class="card shadow-sm">
+            <div class="card-body p-4">
+              <h2 class="h5 mb-3">Already registered?</h2>
+              <p class="text-muted small">Enter your matriculation number to open your dashboard.</p>
+              <form id="studentLoginForm">
+                <div class="mb-3">
+                  <label for="loginMatric" class="form-label">Matriculation number</label>
+                  <input type="text" class="form-control" id="loginMatric" autocomplete="off" required>
+                </div>
+                <div id="studentLoginMessage" class="text-danger mb-2" role="alert" aria-live="polite"></div>
+                <button type="submit" class="btn btn-outline-primary w-100">Open dashboard</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== DASHBOARD VIEW (shown when a student is signed in) ===== -->
+    <section id="dashboardSection" class="d-none">
+
+      <div id="studentInfo" class="mb-4"></div>
+
+      <div id="summaryCards" class="row g-3 mb-3"></div>
+      <div id="summaryMessage" class="mb-4"></div>
+
+      <div id="courseSection" class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h2 class="h5">My Courses</h2>
+          <div id="courseList" class="mb-4"></div>
+
+          <h3 class="h6">Add a course</h3>
+          <form id="addCourseForm" class="row g-2" novalidate>
+            <div class="col-12 col-md-3">
+              <input type="text" class="form-control" id="newCourseCode" placeholder="Course code">
+            </div>
+            <div class="col-12 col-md-6">
+              <input type="text" class="form-control" id="newCourseTitle" placeholder="Course title">
+            </div>
+            <div class="col-12 col-md-3">
+              <button type="submit" class="btn btn-primary w-100">Add course</button>
+            </div>
+          </form>
+          <div id="addCourseMessage" class="mt-2" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div id="historySection" class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h2 class="h5">Attendance History</h2>
+          <p class="text-muted small">View only. Attendance is recorded by your lecturer.</p>
+          <div id="attendanceHistory"></div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="container text-center text-muted py-3">
+    <small>Frontend demonstration project (SIWES). Data is saved in this browser only.</small>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/student.js"></script>
+</body>
+</html>

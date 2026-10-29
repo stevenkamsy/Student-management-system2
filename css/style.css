@@ -1,0 +1,86 @@
+/* Custom design system for the Student Management System.
+   Bootstrap handles the grid and common components; these rules add our own identity. */
+:root {
+  --sms-navy: #102a43;
+  --sms-blue: #1769aa;
+  --sms-blue-dark: #0b3b70;
+  --sms-page: #f3f6fb;
+  --sms-border: #e2e8f0;
+  --sms-muted: #61758a;
+  --sms-radius: 16px;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+body {
+  background: var(--sms-page);
+  color: #243447;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.55;
+}
+.navbar {
+  box-shadow: 0 4px 18px rgba(16, 42, 67, .12);
+}
+.navbar.bg-primary { background-color: var(--sms-navy) !important; }
+.navbar.bg-dark { background-color: #172b4d !important; }
+.navbar-brand { font-weight: 750; letter-spacing: -.02em; }
+.nav-link { font-weight: 550; }
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(130deg, var(--sms-navy), var(--sms-blue), #3c82c4);
+  padding-top: clamp(3.5rem, 8vw, 6.5rem) !important;
+  padding-bottom: clamp(3.5rem, 8vw, 6.5rem) !important;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  right: -90px;
+  bottom: -150px;
+  border: 38px solid rgba(255,255,255,.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero .container { position: relative; z-index: 1; }
+.hero h1 { letter-spacing: -.035em; }
+.hero p { max-width: 680px; margin-inline: auto; color: rgba(255,255,255,.86); }
+main.container { max-width: 1180px; }
+.card {
+  border: 1px solid var(--sms-border);
+  border-radius: var(--sms-radius);
+  box-shadow: 0 8px 24px rgba(16, 42, 67, .045) !important;
+}
+.card-body { padding: clamp(1rem, 2.5vw, 1.5rem); }
+.role-card { height: 100%; transition: transform .2s ease, box-shadow .2s ease; }
+.role-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(16, 42, 67, .12) !important; }
+.role-card .card-title { font-weight: 750; }
+.summary-card { height: 100%; border: 0; border-top: 4px solid var(--sms-blue); }
+.summary-card .number { font-size: clamp(1.45rem, 3vw, 2rem); font-weight: 800; color: var(--sms-navy); line-height: 1.25; margin-top: .3rem; }
+.btn { min-height: 42px; border-radius: 10px; font-weight: 600; }
+.btn-lg { padding: .75rem 1rem; }
+.form-control, .form-select { min-height: 44px; border-color: #cbd5e1; border-radius: 10px; }
+.form-control:focus, .form-select:focus { border-color: #5b9bd5; box-shadow: 0 0 0 .2rem rgba(23,105,170,.14); }
+.form-label { font-weight: 650; color: #344b60; }
+.table { --bs-table-bg: transparent; margin-bottom: 0; }
+.table thead th { font-size: .82rem; text-transform: uppercase; letter-spacing: .035em; vertical-align: middle; }
+.table td, .table th { padding: .85rem .75rem; }
+.table td { vertical-align: middle; }
+.table-responsive { border-radius: 10px; }
+.progress { min-width: 72px; border-radius: 99px; background: #e5edf5; }
+.progress-bar { border-radius: 99px; }
+.alert { border: 0; border-radius: 12px; }
+section[id] { scroll-margin-top: 5rem; }
+footer { color: var(--sms-muted) !important; }
+footer small { font-size: .85rem; }
+
+@media (max-width: 576px) {
+  .hero h1 { font-size: 2rem; }
+  .hero p { font-size: 1rem; }
+  .table td, .table th { padding: .7rem .6rem; }
+  .summary-card .number { font-size: 1.45rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
